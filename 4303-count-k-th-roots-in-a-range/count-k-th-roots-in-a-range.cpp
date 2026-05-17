@@ -1,14 +1,25 @@
-#define ll long long
 class Solution {
 public:
-    /*
-    we have to check k-root
-*/
+    long long intPower(int x, int k) {
+        long long res = 1;
+        for (int i = 1; i <= k; i++) {
+            res = res * x;
+        }
+        return res;
+    }
+
     int countKthRoots(int l, int r, int k) {
-       
-       long long left=ceil(pow(l,1.0/k)-1e-9);
-        long long right=floor(pow(r,1.0/k)+1e-9);
-        
-        return (int)(right-left+1);
+        if (k == 1)
+            return r - l + 1;
+
+        long long c = 0;
+        for (long long i = 0; i <= r; i++) {
+            long long y = intPower(i, k);
+            if (y >= l && y <= r)
+                c++;
+
+            if(y>r)break;
+        }
+        return c;
     }
 };
