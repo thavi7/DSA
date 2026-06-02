@@ -1,21 +1,24 @@
 class Solution {
 public:
-    vector<vector<int>> subsets(vector<int>& a) {
-        vector<vector<int>>x;
-        int n=a.size(), sub=1<<n;
+    void subseq(vector<int>& a, int i, int n, vector<int>& temp, vector<vector<int>>& ans) {
 
-        for(int ii=0;ii<sub;ii++)
-        {
-            vector<int>y;
-            for(int i=0;i<n;i++)
-            {
-                if(ii&(1<<i))
-                {
-                    y.push_back(a[i]);
-                }
-            }
-            x.push_back(y);
+        if (i == n) {
+            ans.push_back(temp);
+            return;
         }
-        return x;
+
+        subseq(a, i + 1, n, temp, ans); // not take
+
+        temp.push_back(a[i]); // take
+        subseq(a, i + 1, n, temp, ans);
+        temp.pop_back();
+    }
+
+    vector<vector<int>> subsets(vector<int>& a) {
+        int n = a.size();
+        vector<vector<int>> ans;
+        vector<int> temp;
+         subseq(a, 0, n, temp, ans);
+         return ans;
     }
 };
